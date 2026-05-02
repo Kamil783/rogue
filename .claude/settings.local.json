@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet add *)",
+      "Bash(dotnet build *)",
+      "Bash(mkdir -p /tmp/inspect)",
+      "Read(//tmp/**)",
+      "Bash(dotnet new *)",
+      "Bash(dotnet run *)",
+      "Bash(mkdir -p C:/Users/User/inspect_tool)",
+      "Read(//c/Users/User/**)",
+      "Bash(cp C:/Users/User/source/repos/Rogue/Rogue.Console/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll C:/Users/User/inspect2/)",
+      "Bash(cat)"
+    ]
+  }
+}
