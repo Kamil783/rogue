@@ -191,7 +191,6 @@ public sealed class GameEngine : IGameWorld
         }
 
         Player.TickEffects();
-        if (Player.Health < 1 && Player.Effects.Count == 0) Player.Health = 1;
 
         if (Player.Health <= 0) { _session.GameOver = true; Log("You have died..."); }
 
@@ -255,12 +254,4 @@ public sealed class GameEngine : IGameWorld
         }
         EndPlayerTurn();
     }
-}
-
-public enum TurnResult
-{
-    Invalid,
-    Acted,
-    GameOver,
-    Victory
 }

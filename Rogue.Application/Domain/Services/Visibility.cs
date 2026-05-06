@@ -24,7 +24,7 @@ public static class Visibility
         }
         else
         {
-            CastRays(level, viewer, 8);
+            CastRays(level, viewer, 3);
         }
     }
 

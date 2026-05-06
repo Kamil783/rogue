@@ -1,14 +1,5 @@
 namespace Rogue.Application.Domain.Entities.Enemies;
 
-public enum EnemyKind
-{
-    Zombie,
-    Vampire,
-    Ghost,
-    Ogre,
-    SnakeMage
-}
-
 public abstract class Enemy : Character
 {
     public EnemyKind Kind { get; set; }
@@ -24,16 +15,4 @@ public abstract class Enemy : Character
     public int InternalState { get; set; }
 
     public abstract void TakeTurn(IGameWorld world, Random rng);
-}
-
-public enum ConsoleColorKind
-{
-    White,
-    Red,
-    Green,
-    Yellow,
-    Blue,
-    Cyan,
-    Magenta,
-    Gray
 }
