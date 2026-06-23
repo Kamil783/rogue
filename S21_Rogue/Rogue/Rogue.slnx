@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Rogue.Domain/Rogue.Domain.csproj" />
+  <Project Path="Rogue.UI/Rogue.UI.csproj" />
+</Solution>
