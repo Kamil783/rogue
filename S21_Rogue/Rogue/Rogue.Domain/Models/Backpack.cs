@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Models
 {
-    internal class Backpack
+    public class Backpack
     {
         private int Capacity = 9;
         private readonly List<Food> _food;
-        private readonly List<Scrolls> _scrolls;
+        private readonly List<Scroll> _scrolls;
         // Add elexirs after
 
         int TreasureValue;
@@ -21,7 +21,7 @@ namespace Rogue.Domain.Models
             TreasureValue = 0;
 
             _food = new List<Food>();
-            _scrolls = new List<Scrolls>();
+            _scrolls = new List<Scroll>();
         }
 
         public void AddItem(Item item) // rewrite to switch case?
@@ -43,7 +43,7 @@ namespace Rogue.Domain.Models
             {
                 if(_scrolls.Count < Capacity)
                 {
-                    Scrolls itemScroll = (Scrolls)item;
+                    Scroll itemScroll = (Scroll)item;
                     _scrolls.Add(itemScroll);
                 }
             }
@@ -71,7 +71,7 @@ namespace Rogue.Domain.Models
             }
             else if (item.Type == ItemType.Scroll)
             {
-                Scrolls ItemScroll = (Scrolls)item;
+                Scroll ItemScroll = (Scroll)item;
                 for (int i = 0; i < _scrolls.Count; i++)
                 {
                     if (ItemScroll == _scrolls[i])

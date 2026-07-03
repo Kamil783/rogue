@@ -10,10 +10,10 @@ namespace Rogue.Domain.Items
     {
         private int Health {  get; set; }
 
-        protected Food () : base()
+        public Food(int x, int y) : base(x, y)
         {
-            Random rnd = new Random();
-            Health = rnd.Next(1, 20);
+            Type = ItemType.Food;  
+            Health = 10;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Rogue.Domain.Models;
+﻿using Rogue.Domain.LevelAtributes;
+using Rogue.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,19 @@ namespace Rogue.Domain.Items
 {
     public enum ItemType
     {
-        Food, Scroll, Elixir, Treasure
+        Food, Scroll, Elixir, Treasure, Weapon
     }
 
     //enum ItemSubtype {}
-    abstract class Item : GameObject
+    abstract public class Item
     {
         public ItemType Type { get; set; }
-        //ItemSubtype Subtype { get; set; }   
-        protected Item() : base() {}
+        //ItemSubtype Subtype { get; set; }
+        Position Position { get; set; }
+        protected Item(int x, int y) 
+        {
+            Position.X = x;
+            Position.Y = y;
+        }
     }
 }

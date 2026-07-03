@@ -1,0 +1,6 @@
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.AssemblyInfoInputs.cache
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.AssemblyInfo.cs
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.csproj.CoreCompileInputs.cache
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.sourcelink.json
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.UI\obj\Debug\net8.0\Rogue.UI.csproj.AssemblyReference.cache

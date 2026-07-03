@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rogue.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9830b4c27c224241d80b7d1c6281f6753e0e088")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62b1b4809e30de2adf2fcf9b457e0e55be5b1f4f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rogue.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rogue.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

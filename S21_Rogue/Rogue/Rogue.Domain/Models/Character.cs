@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rogue.Domain.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,26 +7,22 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Models
 {
-    enum WeaponType
-    {
-        None,
-        Chopsticks,
-        Knife,
-        Sword,
-        Axe,
-
-    }
-    internal class Character : Creature
+    public class Character : Creature
     {
         public int MaxHealth { get; set; }
-        public WeaponType CurrentWeapon { get; set; }
+        public ItemType CurrentWeapon { get; set; }
+        public Backpack Backpack { get; set; }
         public Character(): base()
         {
+            Health = 100;
+            Strength = 50;
+            Agility = 50;
             MaxHealth = 100;
-            CurrentWeapon = WeaponType.None;
+            CurrentWeapon = ItemType.Weapon;
+            Backpack = new Backpack();
         }
 
-        void IncreseHealth(int health)
+        void IncreaseHealth(int health)
         {
             if (health < 0)
             {
@@ -34,7 +31,7 @@ namespace Rogue.Domain.Models
             Health = Math.Min(Health + health, MaxHealth);
         }
 
-        void GetWepon(WeaponType weapon)
+        void GetWeapon(ItemType weapon)
         {
             CurrentWeapon = weapon;
         }

@@ -10,9 +10,9 @@ namespace Rogue.Domain.LevelAtributes
     {
        public List<Position> Cells { get; set; }
        
-        public Corridor() 
+        public Corridor(List<Position> positions) 
         {
-            Cells = new List<Position>();
+            Cells = positions;
         }
 
     }

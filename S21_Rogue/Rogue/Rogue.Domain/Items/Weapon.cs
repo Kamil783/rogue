@@ -9,10 +9,10 @@ namespace Rogue.Domain.Items
     internal class Weapon : Item
     {
         private int Strength { get; set; }
-        protected Weapon(int x, int y, ItemType type, ItemSubtype subtype) : base(x, y, type, subtype)
+        protected Weapon(int x, int y) : base(x, y)
         {
-            Random rnd = new Random();
-            Strength = rnd.Next(1, 10);
+            Type = ItemType.Weapon;
+            Strength = 10;
         }
     }
 }

@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.LevelAtributes
 {
-    struct Position
+    public class Position
     {
-        public int X;
-        public int Y;
+        public int X {  get; set; }
+        public int Y { get; set; }
+
+        public Position(int x, int y)
+        {
+            X = x; 
+            Y = y;
+        }
     }
     internal class Room
     {
@@ -17,12 +23,11 @@ namespace Rogue.Domain.LevelAtributes
         public int Height { get; set; }
         public int Width { get; set; }
 
-        public Room() 
+        public Room(int width, int height, Position position) 
         {
-            Position = new Position();
-            Height = 0;
-            Width = 0;
+            Position = position;
+            Height = height;
+            Width = width;
         }
-
     }
 }

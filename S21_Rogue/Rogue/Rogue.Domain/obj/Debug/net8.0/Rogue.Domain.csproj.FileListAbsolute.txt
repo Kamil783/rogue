@@ -1,0 +1,12 @@
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.AssemblyInfoInputs.cache
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.AssemblyInfo.cs
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.csproj.CoreCompileInputs.cache
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.sourcelink.json
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\bin\Debug\net8.0\Rogue.Domain.deps.json
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\bin\Debug\net8.0\Rogue.Domain.dll
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\bin\Debug\net8.0\Rogue.Domain.pdb
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.dll
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\refint\Rogue.Domain.dll
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\Rogue.Domain.pdb
+C:\Users\69091\Documents\Programming\rogue\S21_Rogue\Rogue\Rogue.Domain\obj\Debug\net8.0\ref\Rogue.Domain.dll
