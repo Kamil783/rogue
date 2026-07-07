@@ -1,8 +1,10 @@
-﻿using Rogue.Domain.LevelAtributes;
+﻿using Rogue.Domain.Items;
+using Rogue.Domain.LevelAtributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,7 +42,13 @@ namespace Rogue.Domain.Models
                     level.AddCorridor(cellsCorridor);
                 }
             }
-            level.ExitPosition = new Position(6, 14);
+            level.StartPosition.X = 10;
+            level.StartPosition.Y = 3;
+            level.ExitPosition.X = 64;
+            level.ExitPosition.Y = 14;
+            level.Map[level.ExitPosition.X, level.ExitPosition.Y] = CellType.Exit;
+            GenerateItems(level);
+            GenerateEnemy(level);
             return level;
         }
 
@@ -93,6 +101,67 @@ namespace Rogue.Domain.Models
                 cells.Add(new Position(x, y));
             }
             return cells;
+        }
+
+        static private void GenerateItems(Level level)
+        {
+            AddItemToList(level, ItemType.Food);
+            AddItemToList(level, ItemType.Scroll);
+            AddItemToList(level, ItemType.Weapon);
+        }
+
+        static private void AddItemToList(Level level, ItemType itemType)
+        {
+            int MaxItemsOnLevel = 0;
+            switch(itemType)
+            {
+                case ItemType.Food: MaxItemsOnLevel = level.MaxFoodOnLevel; break;
+                case ItemType.Scroll: MaxItemsOnLevel = level.MaxScrollsOnLevel; break;
+                case ItemType.Weapon: MaxItemsOnLevel = level.MaxWeaponOnLevel; break;
+            }
+
+            for(int i = 0; i < MaxItemsOnLevel; i++)
+            {
+                int x = i + 5;
+                int y = i + 7;
+                level.items.Add(CreateItem(level, x, y, itemType));
+            }
+        }
+
+        static private Item CreateItem(Level level, int x, int y, ItemType itemType)
+        {
+            for (int attempt = 0; attempt < 100; attempt++)
+            {
+                if (level.Map[x, y] != CellType.Floor)
+                {
+                    continue;
+                }
+                switch(itemType)
+                {
+                    case ItemType.Food: return level.AddFood(new Position(x, y));
+                    case ItemType.Scroll: return level.AddScroll(new Position(x, y));
+                    case ItemType.Weapon: return level.AddWeapon(new Position(x, y));
+                }
+            }
+            throw new InvalidOperationException("Could not generate item after meny attempts.");
+        }
+
+        static void GenerateEnemy(Level level)
+        {
+            for (int i = 0; i < level.MaxEnemiesOnLevel; i++)
+            {
+                int EnemyTypeNumber = 1;
+                int x = i + 20;
+                int y = i + 5;
+                for (int attempt = 0; attempt <= 100; attempt++)
+                {
+                    if (level.Map[x, y] != CellType.Floor)
+                    {
+                        continue; 
+                    }
+                    level.enemies.Add(level.AddEnemy(new Position(x,y), EnemyTypeNumber));
+                }
+            }
         }
     }
 }

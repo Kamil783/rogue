@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rogue.Domain.LevelAtributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Items
 {
-    internal class Treasure: Item
+    public class Treasure: Item
     {
         public int Value { get; set; }
 
-        public Treasure(int x, int y): base(x, y)
+        public Treasure(Position position): base(position)
         {
             Type = ItemType.Treasure;
             Value = 100;

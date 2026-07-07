@@ -16,9 +16,9 @@ namespace Rogue.Domain.Models
 
         public bool IsAlive => Health > 0;
 
-        public Creature() 
+        public Creature(Position position) 
         {
-            Position = new Position(0, 0);
+            Position = position;
         }
 
         public void TakeDamage (int damage)
@@ -28,17 +28,6 @@ namespace Rogue.Domain.Models
                 throw new ArgumentOutOfRangeException(nameof(damage));
             }
             Health = Math.Max(0, Health - damage);
-        }
-
-        public virtual void Move(int x, int y) 
-        {
-            Position.X += x;
-            Position.Y += y;
-        }
-
-        public bool IsWalkable(Position position)
-        {
-            return true;
         }
     }
 }

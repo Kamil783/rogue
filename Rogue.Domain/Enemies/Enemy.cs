@@ -1,4 +1,5 @@
-﻿using Rogue.Domain.Models;
+﻿using Rogue.Domain.LevelAtributes;
+using Rogue.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Enemies
 {
-    enum EnemyType
+    public enum EnemyType
     {
         Zombie,
         Vampire,
@@ -15,11 +16,11 @@ namespace Rogue.Domain.Enemies
         Ogre,
         SnakeMage
     }
-    abstract class Enemy : Creature
+    public abstract class Enemy : Creature
     {
         public EnemyType Type { get; set; }
         public int Hostility { get; set; }
-        public Enemy() : base() {}
+        public Enemy(Position position) : base(position) {}
 
         public virtual void PatternMove() {} 
     }

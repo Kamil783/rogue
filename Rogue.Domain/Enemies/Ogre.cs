@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rogue.Domain.LevelAtributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Enemies
 {
-    internal class Ogre: Enemy
+    public class Ogre: Enemy
     {
-        public Ogre() : base()
+        public Ogre(Position position) : base(position)
         {
             Type = EnemyType.Ogre;
             Health = 75;

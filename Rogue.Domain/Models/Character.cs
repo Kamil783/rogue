@@ -1,4 +1,5 @@
 ﻿using Rogue.Domain.Items;
+using Rogue.Domain.LevelAtributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Rogue.Domain.Models
         public int MaxHealth { get; set; }
         public ItemType CurrentWeapon { get; set; }
         public Backpack Backpack { get; set; }
-        public Character(): base()
+        public Character(Position position): base(position)
         {
             Health = 100;
             Strength = 50;
@@ -51,5 +52,6 @@ namespace Rogue.Domain.Models
         {
             Strength += strength;
         }
+       
     }
 }
