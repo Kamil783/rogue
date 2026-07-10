@@ -91,6 +91,7 @@ namespace Rogue.Domain.LevelAtributes
 
         public bool IsInside(Position position)
         {
+            if(position.X >= Width || position.Y >= Height || position.X < 0 || position.Y < 0) return false;
             return true;
         }
 
@@ -100,22 +101,22 @@ namespace Rogue.Domain.LevelAtributes
             return false;
         }
 
-        public bool HasEnemyAt(Position position)
+        public Enemy? HasEnemyAt(Position position)
         {
             foreach (var enemy in enemies)
             {
-                if(enemy.Position == position) return true;
+                if(enemy.Position == position) return enemy;
             } 
-            return false;
+            return null;
         }
 
-        public bool HasItemAt(Position position)
+        public Item? HasItemAt(Position position)
         {
             foreach(var item in items)
             {
-                if (item.Position == position) return true;
+                if (item.Position == position) return item;
             }
-            return false;
+            return null;
         }
 
         public bool CanPlaceRoom(Position position, int width, int height)
@@ -129,11 +130,29 @@ namespace Rogue.Domain.LevelAtributes
 
         private bool IsRoomInside(Position position, int width, int height)
         {
+            for (int x = position.X; x < position.X + width - 1; x++)
+            {
+                if(x >= Width || x < 0) return false;
+            }
+            for (int y = position.Y; y < position.Y + height - 1; y++)
+            {
+                if (y >= Height || y < 0) return false;
+            }
             return true;
         }
 
         private bool IsAreaEmpty(Position position, int width, int height)
         {
+            for (int x = position.X; x < position.X + width - 1; x++)
+            {
+                for (int y = position.Y; y < position.Y + height - 1; y++)
+                {
+                    if (Map[x,y] != CellType.Empty)
+                    {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
@@ -175,9 +194,10 @@ namespace Rogue.Domain.LevelAtributes
             return scroll;
         }
 
-        public Treasure AddTreasure(Position position)
+        public Treasure AddTreasure(Position position, int value)
         {
             var treasure = new Treasure(position);
+            treasure.Value = value;
             return treasure;
         }
 

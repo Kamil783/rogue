@@ -29,5 +29,12 @@ namespace Rogue.Domain.Models
             }
             Health = Math.Max(0, Health - damage);
         }
+
+        public bool HitCalculate(Creature defender)
+        {
+            int correction = 15;
+            if (Agility + correction > defender.Agility) return true;
+            return false;
+        }
     }
 }

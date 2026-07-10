@@ -14,7 +14,7 @@ namespace Rogue.Domain.Items
         public Treasure(Position position): base(position)
         {
             Type = ItemType.Treasure;
-            Value = 100;
+            Value = 0;
         }
     }
 }

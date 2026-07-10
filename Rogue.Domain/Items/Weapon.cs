@@ -9,11 +9,10 @@ namespace Rogue.Domain.Items
 {
     public class Weapon : Item
     {
-        private int Strength { get; set; }
+        public int Strength { get; set; }
         public Weapon(Position position) : base(position)
         {
             Type = ItemType.Weapon;
-            Strength = 10;
         }
     }
 }

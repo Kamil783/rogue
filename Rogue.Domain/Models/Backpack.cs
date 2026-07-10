@@ -61,13 +61,14 @@ namespace Rogue.Domain.Models
             if (item.Type == ItemType.Food)
             {
                 Food ItemFood = (Food)item;
-                for (int i = 0; i < _food.Count; i++)
-                {
-                    if(ItemFood ==  _food[i])
-                    {
-                        _food.RemoveAt(i); break;
-                    }
-                }
+                _food.Remove(ItemFood);
+                //for (int i = 0; i < _food.Count; i++)
+                //{
+                //    if(ItemFood ==  _food[i])
+                //    {
+                //        _food.RemoveAt(i); break;
+                //    }
+                //}
             }
             else if (item.Type == ItemType.Scroll)
             {

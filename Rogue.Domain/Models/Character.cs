@@ -11,16 +11,16 @@ namespace Rogue.Domain.Models
     public class Character : Creature
     {
         public int MaxHealth { get; set; }
-        public ItemType CurrentWeapon { get; set; }
-        public Backpack Backpack { get; set; }
+        public Weapon CurrentWeapon { get; set; }
+        public Backpack CharacterBackpack { get; set; }
         public Character(Position position): base(position)
         {
             Health = 100;
             Strength = 50;
             Agility = 50;
             MaxHealth = 100;
-            CurrentWeapon = ItemType.Weapon;
-            Backpack = new Backpack();
+            CurrentWeapon = new Weapon(new Position(0,0));
+            CurrentWeapon.SubType = ItemSubtype.None;
         }
 
         void IncreaseHealth(int health)
@@ -32,7 +32,7 @@ namespace Rogue.Domain.Models
             Health = Math.Min(Health + health, MaxHealth);
         }
 
-        void GetWeapon(ItemType weapon)
+        void GetWeapon(Weapon weapon)
         {
             CurrentWeapon = weapon;
         }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Rogue.Domain.Enemies;
 using Rogue.Domain.Items;
 using Rogue.Domain.LevelAtributes;
 
@@ -38,21 +39,23 @@ namespace Rogue.Domain.Models
         public void MovePlayer(Direction direction)
         {
             var newposition = GetNextPosition(Session.Character.Position, direction);
-            if (!Session.CurrentLevel.IsWalkable(newposition))
+            if (!Session.CurrentLevel.IsInside(newposition) || !Session.CurrentLevel.IsWalkable(newposition))
             {
                 return;
             }
-
-            if (Session.CurrentLevel.HasEnemyAt(newposition))
+            var findEnemy = Session.CurrentLevel.HasEnemyAt(newposition);
+            if (findEnemy != null)
             {
-                //AddingNewEventArgs fight!!
+                CombatProcess(findEnemy);
             }
-
-            if (Session.CurrentLevel.HasItemAt(newposition))
+            var findItem = Session.CurrentLevel.HasItemAt(newposition);
+            if (findItem != null)
             {
-                // function put item to backpack;
+                Session.Character.CharacterBackpack.AddItem(findItem);
+                Session.CurrentLevel.items.Add(findItem);
             }
             Session.Character.Position = newposition;
+            CheckExit(newposition);
         }
 
         static Position GetNextPosition(Position position, Direction direction)
@@ -77,9 +80,13 @@ namespace Rogue.Domain.Models
 
         }
 
-        private void ChackExit()
+        private void CheckExit(Position position)
         {
-
+            if (position == Session.CurrentLevel.ExitPosition)
+            {
+                GoToNextLevel();
+            }
+            return;
         }
 
         public void Quit()
@@ -87,5 +94,46 @@ namespace Rogue.Domain.Models
             Session.CurrentStatus = Status.Quit;
         }
 
+        private void CombatProcess(Enemy enemy)
+        {
+            while(enemy.IsAlive && Session.Character.IsAlive)
+            {
+                MakeAttack(Session.Character, enemy);
+                if (!enemy.IsAlive)
+                {
+                    Session.CurrentLevel.enemies.Remove(enemy);
+                    Session.CurrentLevel.AddTreasure(enemy.Position, Session.CurrentLevel.Number);
+                    return;
+                }
+                MakeAttack(enemy, Session.Character);
+                if(!Session.Character.IsAlive)
+                {
+                    Session.CurrentStatus = Status.Lost;
+                    return;
+                }
+            }
+        }
+
+        private void MakeAttack(Creature forward, Creature defender)
+        {
+            if (forward.HitCalculate(defender))
+            {
+                int damage = DamageCalculate(forward);
+                defender.TakeDamage(damage);
+            }
+            return;
+        }
+
+        private int DamageCalculate(Creature forward)
+        {
+            int damage = 0;
+            if (forward is Character)
+            {
+                var castforward = (Character)forward;
+                if (castforward.CurrentWeapon.SubType != ItemSubtype.None)
+                damage = castforward.CurrentWeapon.Strength;
+            }
+            return damage + forward.Strength;
+        }
     }
 }
