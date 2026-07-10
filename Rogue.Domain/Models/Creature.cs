@@ -16,9 +16,9 @@ namespace Rogue.Domain.Models
 
         public bool IsAlive => Health > 0;
 
-        public Creature() 
+        public Creature(Position position) 
         {
-            Position = new Position(0, 0);
+            Position = position;
         }
 
         public void TakeDamage (int damage)
@@ -30,15 +30,11 @@ namespace Rogue.Domain.Models
             Health = Math.Max(0, Health - damage);
         }
 
-        public virtual void Move(int x, int y) 
+        public bool HitCalculate(Creature defender)
         {
-            Position.X += x;
-            Position.Y += y;
-        }
-
-        public bool IsWalkable(Position position)
-        {
-            return true;
+            int correction = 15;
+            if (Agility + correction > defender.Agility) return true;
+            return false;
         }
     }
 }

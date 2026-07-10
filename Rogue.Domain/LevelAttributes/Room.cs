@@ -11,10 +11,22 @@ namespace Rogue.Domain.LevelAtributes
         public int X {  get; set; }
         public int Y { get; set; }
 
+        public Position() {}
         public Position(int x, int y)
         {
             X = x; 
             Y = y;
+        }
+        public static bool operator==(Position left, Position right)
+        {
+            if(left.X == right.X && left.Y == right.Y) return true;
+            return false;
+        }
+
+        public static bool operator!=(Position left, Position right)
+        {
+            if(left.X != right.X || left.Y != right.Y) return true;
+            return false;
         }
     }
     internal class Room

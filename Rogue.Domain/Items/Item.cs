@@ -12,17 +12,20 @@ namespace Rogue.Domain.Items
     {
         Food, Scroll, Elixir, Treasure, Weapon
     }
+    public enum ItemSubtype
+    {
+        None, Apple, Bred, Chicken, AgilityBoost, StrengthBoost, MaxHealthBoost, Sword, Axe, Dagger, Chopsticks
+    }
 
     //enum ItemSubtype {}
     abstract public class Item
     {
         public ItemType Type { get; set; }
-        //ItemSubtype Subtype { get; set; }
-        Position Position { get; set; }
-        protected Item(int x, int y) 
+        public ItemSubtype SubType { get; set; }
+        public Position Position { get; set; }
+        protected Item(Position position) 
         {
-            Position.X = x;
-            Position.Y = y;
+            Position = position;
         }
     }
 }
