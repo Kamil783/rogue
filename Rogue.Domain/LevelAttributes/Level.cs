@@ -49,9 +49,9 @@ namespace Rogue.Domain.LevelAtributes
                     Map[i, j] = CellType.Empty;
                 }
             }
-            MaxFoodOnLevel = Number + 3;
-            MaxScrollsOnLevel = Number + 3;
-            MaxWeaponOnLevel = Number + 3;
+            MaxFoodOnLevel = Number + 1;
+            MaxScrollsOnLevel = Number + 1;
+            MaxWeaponOnLevel = Number + 1;
             MaxEnemiesOnLevel = Number + 1;
             rooms = new List<Room>();
             corridors = new List<Corridor>();

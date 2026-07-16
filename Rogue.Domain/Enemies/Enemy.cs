@@ -20,8 +20,15 @@ namespace Rogue.Domain.Enemies
     {
         public EnemyType Type { get; set; }
         public int Hostility { get; set; }
+        public Direction PatternDirection { get; set; }
         public Enemy(Position position) : base(position) {}
 
-        public virtual void PatternMove() {} 
+        public virtual Direction GetDirectionOfPatternMove() 
+        {
+            return PatternDirection;
+        } 
+        public virtual void SuccessPatternMove() {}
+
+        public virtual void ChangePattrenDirection() {}
     }
 }

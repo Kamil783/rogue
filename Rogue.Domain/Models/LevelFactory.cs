@@ -113,17 +113,18 @@ namespace Rogue.Domain.Models
         static private void AddItemToList(Level level, ItemType itemType)
         {
             int MaxItemsOnLevel = 0;
+            int counter = 0;
             switch(itemType)
             {
                 case ItemType.Food: MaxItemsOnLevel = level.MaxFoodOnLevel; break;
-                case ItemType.Scroll: MaxItemsOnLevel = level.MaxScrollsOnLevel; break;
-                case ItemType.Weapon: MaxItemsOnLevel = level.MaxWeaponOnLevel; break;
+                case ItemType.Scroll: MaxItemsOnLevel = level.MaxScrollsOnLevel; counter = 6; break;
+                case ItemType.Weapon: MaxItemsOnLevel = level.MaxWeaponOnLevel; counter = 14; break;
             }
 
-            for(int i = 0; i < MaxItemsOnLevel; i++)
+            for(int i = counter; i < MaxItemsOnLevel; i++)
             {
-                int x = i + 5;
-                int y = i + 7;
+                int x = i + 7;
+                int y = i + 3;
                 level.items.Add(CreateItem(level, x, y, itemType));
             }
         }

@@ -56,6 +56,7 @@ namespace Rogue.Domain.Models
             }
             Session.Character.Position = newposition;
             CheckExit(newposition);
+            ProcessEnemyTurn();
         }
 
         static Position GetNextPosition(Position position, Direction direction)
@@ -134,6 +135,40 @@ namespace Rogue.Domain.Models
                 damage = castforward.CurrentWeapon.Strength;
             }
             return damage + forward.Strength;
+        }
+
+        private void ProcessEnemyTurn()
+        {
+            foreach(var enemy in Session.CurrentLevel.enemies)
+            {
+                MoveEnemyByPattern(enemy);
+            }
+        }
+
+        private void MoveEnemyByPattern(Enemy enemy)
+        {
+            var direction = enemy.GetDirectionOfPatternMove();
+            var newposition = GetNextPosition(enemy.Position, direction);
+            if (EnemyCanMove(newposition))
+            {
+                enemy.Position = newposition;
+                enemy.SuccessPatternMove();
+            }
+            else
+            {
+                enemy.ChangePattrenDirection();
+            }
+        }
+
+        private bool EnemyCanMove(Position position)
+        {
+            if (!Session.CurrentLevel.IsInside(position)) return false;
+            if (Session.CurrentLevel.Map[position.X, position.Y] != CellType.Floor) return false;
+            foreach(var enemy in Session.CurrentLevel.enemies)
+            {
+                if(enemy.Position == position) return false;
+            }
+            return true;
         }
     }
 }

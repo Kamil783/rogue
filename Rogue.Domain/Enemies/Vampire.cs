@@ -9,6 +9,11 @@ namespace Rogue.Domain.Enemies
 {
     public class Vampire: Enemy
     {
+        private Direction[] directionarray = {Direction.North, Direction.East, Direction.South, Direction.West};
+        private int currentDirectionIndex;
+        private int stepsInDirection;
+        private int sideLength;
+
         public Vampire(Position position) : base(position)
         {
             Type = EnemyType.Vampire;
@@ -16,7 +21,30 @@ namespace Rogue.Domain.Enemies
             Agility = 65;
             Strength = 40;
             Hostility = 65;
+            currentDirectionIndex = 0;
+            stepsInDirection = 0;
+            sideLength = 2;
         }
-        // Add Pattern Move
+
+        public override Direction GetDirectionOfPatternMove()
+        {
+            return directionarray[currentDirectionIndex];
+        }
+
+        public override void SuccessPatternMove() 
+        {
+            stepsInDirection++;
+            if(stepsInDirection >= sideLength)
+            {
+                stepsInDirection = 0;
+                currentDirectionIndex++;
+            }
+        }
+
+        public override void ChangePattrenDirection() 
+        {
+            stepsInDirection = 0;
+            currentDirectionIndex++;
+        }
     }
 }

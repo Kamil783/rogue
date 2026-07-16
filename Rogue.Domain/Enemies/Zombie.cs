@@ -16,8 +16,19 @@ namespace Rogue.Domain.Enemies
             Agility = 15;
             Strength = 40;
             Hostility = 40;
+            PatternDirection = Direction.East;
         }
 
-        // Add Pattern Move
+        public override void ChangePattrenDirection()
+        {
+            if (PatternDirection == Direction.East)
+            {
+                PatternDirection = Direction.West;
+            }
+            else if (PatternDirection == Direction.West)
+            {
+                PatternDirection = Direction.East;
+            }
+        }
     }
 }
