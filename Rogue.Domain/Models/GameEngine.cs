@@ -185,6 +185,7 @@ namespace Rogue.Domain.Models
                     Session.CurrentStatus = Status.Lost;
                     return;
                 }
+
                 return;
             }
             else if (EnemyCanMoveByPath(path))
