@@ -13,7 +13,7 @@ namespace Rogue.Domain.Application
     {
         public IRender _render;
         public IInput _input;
-        
+
         public GameRunner(IRender render, IInput input)
         {
             _input = input;
@@ -55,7 +55,24 @@ namespace Rogue.Domain.Application
 
         public void ChooseAndUse(GameEngine engine, ItemType type)
         {
-            //write 
+            var key = _input.ReadInput();
+            var index = key switch
+            {
+                PlayerCommand.Choice0 => 0,
+                PlayerCommand.Choice1 => 1,
+                PlayerCommand.Choice2 => 2,
+                PlayerCommand.Choice3 => 3,
+                PlayerCommand.Choice4 => 4,
+                PlayerCommand.Choice5 => 5,
+                PlayerCommand.Choice6 => 6,
+                PlayerCommand.Choice7 => 7,
+                PlayerCommand.Choice8 => 8,
+                PlayerCommand.Choice9 => 9,
+                _ => -1
+            };
+            engine.UseItem(type, index);
+            engine.ProcessTemporaryEffects();
+            engine.ProcessEnemyTurn();
         }
     }
 }

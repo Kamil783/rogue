@@ -9,14 +9,35 @@ namespace Rogue.Domain.Enemies
 {
     public class SnakeMage: Enemy
     {
+        private int dx = 1;
+        private int dy = -1;
         public SnakeMage(Position position) : base(position)
         {
             Type = EnemyType.SnakeMage;
             Health = 75;
             Agility = 75;
             Strength = 40;
-            Hostility = 75;
+            Hostility = 8;
         }
-        // Add Pattern Move
+
+        public override List<Position> GetPatternMoveCells()
+        {
+            var path = new List<Position>();
+            var position = new Position(); 
+            position.X = Position.X + dx;
+            position.Y = Position.Y + dy;
+            path.Add(position);
+            return path;
+        }
+        public override void SuccessPatternMove() 
+        {
+            dy = -dy;
+        }
+
+        public override void ChangePattrenDirection() 
+        {
+            dx = -dx;
+            dy = -dy;
+        }
     }
 }

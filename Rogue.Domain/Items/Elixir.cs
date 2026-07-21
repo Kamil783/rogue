@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.Items
 {
-    public class Scroll : Item
+    public class Elixir : Item
     {
         public int MaxHealth { get; set; }
         public int Agility { get; set; }
         public int Strength { get; set; }
-        public Scroll(Position position) : base(position)
+        public int TurnsCounter { get; set; }
+        public Elixir(Position position) : base(position)
         {
-            Type = ItemType.Scroll;
+            Type = ItemType.Elixir;
             MaxHealth = 10;
             Agility = 10;
             Strength = 10;
+            TurnsCounter = 30;
         }
     }
 }

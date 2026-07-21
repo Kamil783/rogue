@@ -18,7 +18,7 @@ namespace Rogue.Domain.Models
 
         public GameSession() 
         {
-            Character = new Character();
+            Character = new Character(new Position(0, 0));
             CurrentStatus = Status.InProgress;
         }
     }

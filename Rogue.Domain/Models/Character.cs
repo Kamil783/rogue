@@ -13,6 +13,7 @@ namespace Rogue.Domain.Models
         public int MaxHealth { get; set; }
         public Weapon CurrentWeapon { get; set; }
         public Backpack CharacterBackpack { get; set; }
+        public List<TemporaryEffect> ActiveEffects { get; set; }
         public Character(Position position): base(position)
         {
             Health = 100;
@@ -21,9 +22,11 @@ namespace Rogue.Domain.Models
             MaxHealth = 100;
             CurrentWeapon = new Weapon(new Position(0,0));
             CurrentWeapon.SubType = ItemSubtype.None;
+            CharacterBackpack = new Backpack();
+            ActiveEffects = new List<TemporaryEffect>();
         }
 
-        void IncreaseHealth(int health)
+        public void IncreaseHealth(int health)
         {
             if (health < 0)
             {
@@ -32,25 +35,57 @@ namespace Rogue.Domain.Models
             Health = Math.Min(Health + health, MaxHealth);
         }
 
-        void GetWeapon(Weapon weapon)
+        public void GetWeapon(Weapon weapon)
         {
             CurrentWeapon = weapon;
         }
 
-        void IncreaseMaxHealth(int health)
+        public void IncreaseMaxHealth(int health)
         {
             MaxHealth += health;
             Health += health;
         }
 
-        void IncreaseAgility(int agility)
+        public void IncreaseAgility(int agility)
         {
             Agility += agility;
         }
 
-        void IncreaseStrength(int strength)
+        public void IncreaseStrength(int strength)
         {
             Strength += strength;
+        }
+
+        public void DecreaseMaxHealth(int health)
+        {
+            MaxHealth -= health;
+            Health -= health;
+            if (Health <= 0) Health = 1;
+            if(Health > MaxHealth) Health = MaxHealth;
+        }
+
+        public void DecreaseAgility(int agility)
+        {
+            Agility -= agility;
+        }
+
+        public void DecreaseStrength(int strength)
+        {
+            Strength -= strength;
+        }
+
+        public class TemporaryEffect
+        {
+            public ItemSubtype Type { get; set; }
+            public int Value { get; set; }
+            public int TurnCounter { get; set; }
+
+            public TemporaryEffect(ItemSubtype type, int value, int turnCounter)
+            {
+                Type = type;
+                Value = value;
+                TurnCounter = turnCounter;
+            } 
         }
        
     }
