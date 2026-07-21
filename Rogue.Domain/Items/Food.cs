@@ -9,7 +9,7 @@ namespace Rogue.Domain.Items
 {
     public class Food : Item
     {
-        private int Health {  get; set; }
+        public int Health {  get; set; }
 
         public Food(Position position) : base(position)
         {

@@ -23,6 +23,7 @@ namespace Rogue.Domain.LevelAtributes
 
         public int MaxFoodOnLevel {  get; set; }
         public int MaxScrollsOnLevel { get; set; }
+        public int MaxElixirsOnLevel { get; set; }
         public int MaxWeaponOnLevel { get; set; }
         public int MaxEnemiesOnLevel { get; set; }
 
@@ -33,7 +34,6 @@ namespace Rogue.Domain.LevelAtributes
         internal List<Enemy> enemies;
         internal List<Item> items;
 
-        //Add ExitPosition? 
         public Level(int number)
         {
             StartPosition = new Position();
@@ -49,9 +49,10 @@ namespace Rogue.Domain.LevelAtributes
                     Map[i, j] = CellType.Empty;
                 }
             }
-            MaxFoodOnLevel = Number + 1;
-            MaxScrollsOnLevel = Number + 1;
-            MaxWeaponOnLevel = Number + 1;
+            MaxFoodOnLevel = Number;
+            MaxScrollsOnLevel = Number;
+            MaxElixirsOnLevel = Number;
+            MaxWeaponOnLevel = Number;
             MaxEnemiesOnLevel = Number + 1;
             rooms = new List<Room>();
             corridors = new List<Corridor>();
@@ -194,6 +195,25 @@ namespace Rogue.Domain.LevelAtributes
             return scroll;
         }
 
+        public Elixir AddElixir(Position position)
+        {
+            int subtypeNumber = 1;
+            var elixir = new Elixir(position);
+            if (subtypeNumber == 1)
+            {
+                elixir.SubType = ItemSubtype.AgilityBoost;
+            }
+            if (subtypeNumber == 2)
+            {
+                elixir.SubType = ItemSubtype.MaxHealthBoost;
+            }
+            if (subtypeNumber == 3)
+            {
+                elixir.SubType = ItemSubtype.StrengthBoost;
+            }
+            return elixir;
+        }
+
         public Treasure AddTreasure(Position position, int value)
         {
             var treasure = new Treasure(position);
@@ -228,11 +248,11 @@ namespace Rogue.Domain.LevelAtributes
         {
             switch(EnemyTypeNumber)
             {
-                case 0: return new Ghost(position);
-                case 1: return new Ogre(position);
-                case 2: return new SnakeMage(position);
-                case 3: return new Vampire(position);
-                case 4: return new Zombie(position);
+                case 0: return new SnakeMage(position);
+                case 1: return new Zombie(position);
+                case 2: return new Ogre(position);
+                case 3: return new Ghost(position);
+                case 4: return new Vampire(position);
                 default: throw new NotImplementedException("Can't make an enemy");
             }
         }

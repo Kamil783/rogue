@@ -108,6 +108,7 @@ namespace Rogue.Domain.Models
             AddItemToList(level, ItemType.Food);
             AddItemToList(level, ItemType.Scroll);
             AddItemToList(level, ItemType.Weapon);
+            AddItemToList(level, ItemType.Elixir);
         }
 
         static private void AddItemToList(Level level, ItemType itemType)
@@ -118,13 +119,15 @@ namespace Rogue.Domain.Models
             {
                 case ItemType.Food: MaxItemsOnLevel = level.MaxFoodOnLevel; break;
                 case ItemType.Scroll: MaxItemsOnLevel = level.MaxScrollsOnLevel; counter = 6; break;
-                case ItemType.Weapon: MaxItemsOnLevel = level.MaxWeaponOnLevel; counter = 14; break;
+                case ItemType.Weapon: MaxItemsOnLevel = level.MaxWeaponOnLevel; counter = 2; break;
+                case ItemType.Elixir: MaxItemsOnLevel = level.MaxWeaponOnLevel; counter = 1; break;
+
             }
 
-            for(int i = counter; i < MaxItemsOnLevel; i++)
+            for(int i = 0; i < MaxItemsOnLevel; i++)
             {
-                int x = i + 7;
-                int y = i + 3;
+                int x = counter + 3;
+                int y = counter + 2;
                 level.items.Add(CreateItem(level, x, y, itemType));
             }
         }
@@ -142,27 +145,30 @@ namespace Rogue.Domain.Models
                     case ItemType.Food: return level.AddFood(new Position(x, y));
                     case ItemType.Scroll: return level.AddScroll(new Position(x, y));
                     case ItemType.Weapon: return level.AddWeapon(new Position(x, y));
+                    case ItemType.Elixir: return level.AddElixir(new Position(x, y));
                 }
             }
-            throw new InvalidOperationException("Could not generate item after meny attempts.");
+            throw new InvalidOperationException("Could not generate item after many attempts.");
         }
 
         static void GenerateEnemy(Level level)
         {
             for (int i = 0; i < level.MaxEnemiesOnLevel; i++)
             {
-                int EnemyTypeNumber = 1;
-                int x = i + 20;
-                int y = i + 5;
+                int EnemyTypeNumber = 1 + i;
+                int x = i * 3 + 30;
+                int y = i * 6 + 3;
                 for (int attempt = 0; attempt <= 100; attempt++)
                 {
                     if (level.Map[x, y] != CellType.Floor)
                     {
                         continue; 
                     }
-                    level.enemies.Add(level.AddEnemy(new Position(x,y), EnemyTypeNumber));
+                    level.enemies.Add(level.AddEnemy(new Position(x, y), EnemyTypeNumber)); break;
                 }
+                //throw new InvalidOperationException("Could not generate item after many attempts.");
             }
+            return;
         }
     }
 }

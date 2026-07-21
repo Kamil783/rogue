@@ -10,8 +10,10 @@ namespace Rogue.Domain.Models
     public class Backpack
     {
         private int Capacity = 9;
-        private readonly List<Food> _food;
-        private readonly List<Scroll> _scrolls;
+        public readonly List<Food> _food;
+        public readonly List<Scroll> _scrolls;
+        public readonly List<Elixir> _elixirs;
+        public readonly List<Weapon> _weapons;
         // Add elexirs after
 
         int TreasureValue;
@@ -22,67 +24,66 @@ namespace Rogue.Domain.Models
 
             _food = new List<Food>();
             _scrolls = new List<Scroll>();
+            _elixirs = new List<Elixir>();
+            _weapons = new List<Weapon>();
         }
 
         public void AddItem(Item item) // rewrite to switch case?
         {
-            if (item.Type == ItemType.Treasure)
+            switch (item.Type)
             {
-                Treasure itemTreasure = (Treasure)item;
-                TreasureValue += itemTreasure.Value;
-            }
-            else if (item.Type == ItemType.Food) 
-            { 
-                if (_food.Count < Capacity)
-                {
-                    Food itemFood = (Food)item;
-                    _food.Add(itemFood);
-                }
-            }
-            else if (item.Type == ItemType.Scroll)
-            {
-                if(_scrolls.Count < Capacity)
-                {
-                    Scroll itemScroll = (Scroll)item;
-                    _scrolls.Add(itemScroll);
-                }
-            }
-            else if (item.Type == ItemType.Elixir)
-            {
-                //if(_elixirs.Count < Capacity)
-                //{
-                //add after make elixirs
-                //}
+                case ItemType.Food:
+                    if (_food.Count < Capacity)
+                    {
+                        Food itemFood = (Food)item;
+                        _food.Add(itemFood);
+                    } break;
+                case ItemType.Scroll:
+                    if (_scrolls.Count < Capacity)
+                    {
+                        Scroll itemScroll = (Scroll)item;
+                        _scrolls.Add(itemScroll);
+                    } break;
+                case ItemType.Elixir:
+                    if (_elixirs.Count < Capacity)
+                    {
+                        Elixir ItemElixir = (Elixir)item;
+                        _elixirs.Add(ItemElixir);
+                    } break;
+                case ItemType.Weapon:
+                    if (_weapons.Count < Capacity)
+                    {
+                        Weapon itemWeapon = (Weapon)item;
+                        _weapons.Add(itemWeapon);
+                    } break;
+                case ItemType.Treasure:
+                    Treasure itemTreasure = (Treasure)item;
+                    TreasureValue += itemTreasure.Value;
+                    break;
             }
         }
 
         public void RemoveItem(Item item)
         {
-            if (item.Type == ItemType.Food)
+            switch(item.Type)
             {
-                Food ItemFood = (Food)item;
-                _food.Remove(ItemFood);
-                //for (int i = 0; i < _food.Count; i++)
-                //{
-                //    if(ItemFood ==  _food[i])
-                //    {
-                //        _food.RemoveAt(i); break;
-                //    }
-                //}
+                case ItemType.Food:
+                    Food ItemFood = (Food)item;
+                    _food.Remove(ItemFood);
+                    break;
+                case ItemType.Scroll:
+                    Scroll ItemScroll = (Scroll)item;
+                    _scrolls.Remove(ItemScroll);
+                    break;
+                case ItemType.Elixir:
+                    Elixir ItemElixir = (Elixir)item;
+                    _elixirs.Remove(ItemElixir);
+                    break;
+                case ItemType.Weapon:
+                    Weapon ItemWeapon = (Weapon)item;
+                    _weapons.Remove(ItemWeapon);
+                    break;
             }
-            else if (item.Type == ItemType.Scroll)
-            {
-                Scroll ItemScroll = (Scroll)item;
-                for (int i = 0; i < _scrolls.Count; i++)
-                {
-                    if (ItemScroll == _scrolls[i])
-                    {
-                        _scrolls.RemoveAt(i); break;
-                    }
-                }
-            }
-            //else if - add elexirs and weapon
         }
-
     }
 }

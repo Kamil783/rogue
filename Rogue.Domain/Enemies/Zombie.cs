@@ -15,7 +15,7 @@ namespace Rogue.Domain.Enemies
             Health = 65;
             Agility = 15;
             Strength = 40;
-            Hostility = 40;
+            Hostility = 6;
             PatternDirection = Direction.East;
         }
 
