@@ -21,7 +21,7 @@ namespace Rogue.Domain.Enemies
             Agility = 65;
             Strength = 15;
             Hostility = 5;
-            Path = new List<Position>() { new Position(3, 14), new Position(15, 16), new Position(7, 16), new Position(4, 15) };
+            Path = new List<Position>();
             CurrentPathIndex = 0;
         }
 
@@ -56,6 +56,11 @@ namespace Rogue.Domain.Enemies
             path.Add(position);
             return path;
 
+        }
+
+        public override void CreatePatternForGhost(Position position)
+        {
+            Path.Add(position);
         }
     }
 }

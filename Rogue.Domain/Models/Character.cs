@@ -13,6 +13,7 @@ namespace Rogue.Domain.Models
         public int MaxHealth { get; set; }
         public Weapon CurrentWeapon { get; set; }
         public Backpack CharacterBackpack { get; set; }
+        public bool IsSleep { get; set; } = false;
         public List<TemporaryEffect> ActiveEffects { get; set; }
         public Character(Position position): base(position)
         {
