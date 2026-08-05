@@ -158,7 +158,7 @@ namespace Rogue.UI
         {
             CellType.Wall => '#',
             CellType.Floor => '.',
-            CellType.Corridor => '#',
+            CellType.Corridor => '!',
             CellType.Exit => '>',
             _ => ' '
         };
