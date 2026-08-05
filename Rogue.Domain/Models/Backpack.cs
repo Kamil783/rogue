@@ -1,4 +1,5 @@
 ﻿using Rogue.Domain.Items;
+using Rogue.Domain.LevelAtributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,9 @@ namespace Rogue.Domain.Models
             _scrolls = new List<Scroll>();
             _elixirs = new List<Elixir>();
             _weapons = new List<Weapon>();
+            var NoneWeapon = new Weapon(new Position(-1, -1));
+            NoneWeapon.SubType = ItemSubtype.None;
+            _weapons.Add(NoneWeapon);
         }
 
         public void AddItem(Item item) // rewrite to switch case?

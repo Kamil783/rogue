@@ -27,6 +27,10 @@ namespace Rogue.Domain.LevelAtributes
         public int MaxWeaponOnLevel { get; set; }
         public int MaxEnemiesOnLevel { get; set; }
 
+        public bool[] connectedRooms = new bool[9];
+
+        private int RoomsConnectedCounter = 0;
+
         public CellType[,] Map; 
 
         internal List<Room> rooms;
@@ -34,13 +38,27 @@ namespace Rogue.Domain.LevelAtributes
         internal List<Enemy> enemies;
         internal List<Item> items;
 
+        public class RoomConnection
+        {
+            public int FirstRoomIndex { get; set; }
+            public int SecondRoomIndex { get; set; }
+            public RoomConnection(int firstRoomIndex,  int secondRoomIndex)
+            {
+                FirstRoomIndex = firstRoomIndex;
+                SecondRoomIndex = secondRoomIndex;
+            }
+        }
+
+        internal List<RoomConnection> chosenConnections = new List<RoomConnection>();
+        internal List<RoomConnection> allPosibleConnections = new List<RoomConnection> { new RoomConnection(0, 1), new RoomConnection(1, 2), new RoomConnection(3, 4), new RoomConnection(4, 5), new RoomConnection(6, 7), new RoomConnection(7, 8), new RoomConnection(0, 3), new RoomConnection(1, 4), new RoomConnection(2, 5), new RoomConnection(3, 6), new RoomConnection(4, 7), new RoomConnection(5, 8)};
+
         public Level(int number)
         {
             StartPosition = new Position();
             ExitPosition = new Position();
             Number = number;
-            Width = 78; //Change to random
-            Height = 18; //Change to random
+            Width = 90; //Change to random
+            Height = 24; //Change to random
             Map = new CellType[Width, Height];
             for (int i = 0; i < Width; i++)
             {
@@ -89,6 +107,54 @@ namespace Rogue.Domain.LevelAtributes
                 Map[cell.X, cell.Y] = CellType.Corridor;
             }
         } 
+
+        public void FindConnectedRooms()
+        {
+            Random random = new Random();
+            int wantedCorridors = random.Next(8, 13);
+            int startRoomIndex = random.Next(0, 9);
+            connectedRooms[startRoomIndex] = true;
+            RoomsConnectedCounter += 1;
+
+            while (RoomsConnectedCounter < 9)
+            {
+                var candidates = new List<RoomConnection>();
+                foreach (var conection in allPosibleConnections)
+                {
+                    if ((connectedRooms[conection.FirstRoomIndex] == false && connectedRooms[conection.SecondRoomIndex] == true) || (connectedRooms[conection.FirstRoomIndex] == true && connectedRooms[conection.SecondRoomIndex] == false))
+                    {
+                        candidates.Add(conection);
+                    }
+                }
+                int randomConnection = random.Next(candidates.Count);
+                chosenConnections.Add(candidates[randomConnection]);
+                RoomsConnectedCounter++;
+                if (connectedRooms[candidates[randomConnection].FirstRoomIndex] == false)
+                {
+                    connectedRooms[candidates[randomConnection].FirstRoomIndex] = true;
+                } else
+                {
+                    connectedRooms[candidates[randomConnection].SecondRoomIndex] = true;
+                }
+            }
+
+            while(chosenConnections.Count < wantedCorridors)
+            {
+                int randomConnection = random.Next(allPosibleConnections.Count);
+                bool InCurrentList = false;
+                foreach(var conection in chosenConnections)
+                {
+                    if(conection == allPosibleConnections[randomConnection])
+                    {
+                        InCurrentList = true;
+                    }
+                }
+                if(!InCurrentList)
+                {
+                    chosenConnections.Add(allPosibleConnections[randomConnection]);
+                }
+            }
+        }
 
         public bool IsInside(Position position)
         {
@@ -214,11 +280,12 @@ namespace Rogue.Domain.LevelAtributes
             return elixir;
         }
 
-        public Treasure AddTreasure(Position position, int value)
+        public void AddTreasure(Position position, int value)
         {
             var treasure = new Treasure(position);
             treasure.Value = value;
-            return treasure;
+            items.Add(treasure);
+            return;
         }
 
         public Weapon AddWeapon(Position position)
@@ -248,11 +315,11 @@ namespace Rogue.Domain.LevelAtributes
         {
             switch(EnemyTypeNumber)
             {
-                case 0: return new SnakeMage(position);
-                case 1: return new Zombie(position);
+                case 0: return new Zombie(position);
+                case 1: return new Vampire(position);
                 case 2: return new Ogre(position);
                 case 3: return new Ghost(position);
-                case 4: return new Vampire(position);
+                case 4: return new SnakeMage(position);
                 default: throw new NotImplementedException("Can't make an enemy");
             }
         }

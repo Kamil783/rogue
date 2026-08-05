@@ -22,6 +22,8 @@ namespace Rogue.Domain.Enemies
         public int Hostility { get; set; }
         public Direction PatternDirection { get; set; }
         public bool HasSeenCharacter { get; set; } = false;
+        public bool MadeAttack { get; set; } = false;
+        public bool IsFirstAttck { get; set; } = true;
         public Enemy(Position position) : base(position) {}
 
         public virtual Direction GetDirectionOfPatternMove() 
@@ -54,5 +56,7 @@ namespace Rogue.Domain.Enemies
             }
             return position;
         }
+
+        public virtual void CreatePatternForGhost(Position position) {}
     }
 }

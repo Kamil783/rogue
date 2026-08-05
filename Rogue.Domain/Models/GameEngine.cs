@@ -38,6 +38,13 @@ namespace Rogue.Domain.Models
 
         public void MovePlayer(Direction direction)
         {
+            if (Session.Character.IsSleep)
+            {
+                Session.Character.IsSleep = false;
+                ProcessTemporaryEffects();
+                ProcessEnemyTurn();
+                return;
+            } 
             var newposition = GetNextPosition(Session.Character.Position, direction);
             if (Session.CurrentLevel.Map[newposition.X, newposition.Y] == CellType.Exit)
             {
@@ -100,6 +107,11 @@ namespace Rogue.Domain.Models
 
         private void CombatProcess(Enemy enemy)
         {
+            if(enemy.Type == EnemyType.Vampire && enemy.IsFirstAttck)
+            {
+                enemy.IsFirstAttck = false;
+                return;
+            }
             MakeAttack(Session.Character, enemy);
             if (!enemy.IsAlive)
             {
@@ -135,6 +147,11 @@ namespace Rogue.Domain.Models
         {
             foreach(var enemy in Session.CurrentLevel.enemies)
             {
+                if(enemy.Type == EnemyType.Ogre && enemy.MadeAttack)
+                {
+                    enemy.MadeAttack = false;
+                    continue;
+                }
                 if (EnemyCanSeeCharacter(enemy))
                 {
                     enemy.HasSeenCharacter = true;
@@ -142,6 +159,11 @@ namespace Rogue.Domain.Models
                 if(CharacterAround(enemy.Position))
                 {
                     MakeAttack(enemy, Session.Character);
+                    enemy.MadeAttack = true;
+                    if(enemy.Type == EnemyType.SnakeMage)
+                    {
+                        TryToMakeCharacterSleep(Session.Character);
+                    }
                     if (!Session.Character.IsAlive)
                     {
                         Session.CurrentStatus = Status.Lost;
@@ -153,10 +175,17 @@ namespace Rogue.Domain.Models
                 {
                     var path = new List<Position>();
                     path = FindPath(enemy.Position, Session.Character.Position, enemy);
-                    if(path != null) enemy.Position = path[0];
+                    if(path != null && path.Count != 0) enemy.Position = path[0];
                 }
                 else MoveEnemyByPattern(enemy);
             }
+        }
+
+        private void TryToMakeCharacterSleep(Character character)
+        {
+            Random random = new Random();
+            int sleepingProbality = random.Next(1, 10);
+            if(sleepingProbality > 7) character.IsSleep = true;
         }
 
         private bool EnemyCanSeeCharacter(Enemy enemy)
@@ -268,17 +297,52 @@ namespace Rogue.Domain.Models
                     Session.Character.CharacterBackpack._elixirs.Remove(elixir);
                     break;
                 case ItemType.Weapon: 
-                    var weapon = Session.Character.CharacterBackpack._weapons[index];
+                    if(index == 0)
+                    {
+                        if (Session.Character.CurrentWeapon.SubType == ItemSubtype.None) break;
+                        var dropPosition = FindDropPosition();
+                        if (dropPosition == null) break;
+                        Session.Character.CurrentWeapon.Position = dropPosition;
+                        Session.CurrentLevel.items.Add(Session.Character.CurrentWeapon);
+                        var nonWeapon = new Weapon(new Position(-1, -1));
+                        nonWeapon.SubType = ItemSubtype.None;
+                        Session.Character.CurrentWeapon = nonWeapon;
+                    }
+                    var weapon = Session.Character.CharacterBackpack._weapons[index - 1];
                     if (Session.Character.CurrentWeapon.SubType != ItemSubtype.None)
                     {
+                        var dropPosition = FindDropPosition();
+                        if (dropPosition == null) break;
+                        Session.Character.CurrentWeapon.Position = dropPosition;
                         Session.CurrentLevel.items.Add(Session.Character.CurrentWeapon);
-                        Session.Character.CurrentWeapon.Position.X = Session.Character.Position.X + 1; //!
-                        Session.Character.CurrentWeapon.Position.Y = Session.Character.Position.Y + 1; // !
                     }
                     Session.Character.GetWeapon(weapon);
                     Session.Character.CharacterBackpack._weapons.Remove(weapon);
                     break;
             }
+        }
+
+        private Position FindDropPosition()
+        {
+            Random random = new Random();
+            var neighbors = new List<Position>()
+            {
+                new Position(Session.Character.Position.X + 1, Session.Character.Position.Y),
+                new Position(Session.Character.Position.X - 1, Session.Character.Position.Y),
+                new Position(Session.Character.Position.X, Session.Character.Position.Y + 1),
+                new Position(Session.Character.Position.X, Session.Character.Position.Y - 1),
+            };
+            var candidates = new List<Position>();
+            foreach(var position in neighbors)
+            {
+                if (Session.CurrentLevel.IsWalkable(position) && Session.CurrentLevel.HasEnemyAt(position) == null && Session.CurrentLevel.HasItemAt(position) == null)
+                {
+                    candidates.Add(position);
+                }
+            }
+            if (candidates.Count == 0) return null;
+            var candidateIndex = random.Next(0, candidates.Count);
+            return candidates[candidateIndex];
         }
 
         public void ProcessTemporaryEffects()
