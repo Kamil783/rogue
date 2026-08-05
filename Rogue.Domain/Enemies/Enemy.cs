@@ -14,7 +14,8 @@ namespace Rogue.Domain.Enemies
         Vampire,
         Ghost,
         Ogre,
-        SnakeMage
+        SnakeMage,
+        Mimic
     }
     public abstract class Enemy : Creature
     {

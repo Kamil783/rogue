@@ -29,7 +29,7 @@ namespace Rogue.Domain.LevelAtributes
             return false;
         }
     }
-    internal class Room
+    public class Room
     {
         public Position Position {  get; set; }
         public int Height { get; set; }
