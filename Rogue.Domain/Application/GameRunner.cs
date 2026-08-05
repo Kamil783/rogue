@@ -18,7 +18,7 @@ namespace Rogue.Domain.Application
         {
             _input = input;
             _render = render;
-        }
+        }  
 
         public void Run()
         {

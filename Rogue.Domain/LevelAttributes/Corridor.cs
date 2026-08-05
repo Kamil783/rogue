@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rogue.Domain.LevelAtributes
 {
-    internal class Corridor
+    public class Corridor
     {
        public List<Position> Cells { get; set; }
        
